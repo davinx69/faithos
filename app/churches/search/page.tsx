@@ -78,7 +78,7 @@ export default function SearchPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by church name, pastor, or area..."
-              className="flex-1 px-4 py-3 rounded-lg text-sm text-gray-900 bg-white outline-none placeholder-gray-400 border border-white/20"
+              className="flex-1 px-4 py-3 rounded-lg text-sm text-gray-900 bg-white outline-none placeholder-gray-400"
             />
             <button className="bg-[#5DCAA5] text-[#042C53] font-semibold px-6 py-3 rounded-lg text-sm">
               Search

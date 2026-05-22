@@ -14,6 +14,9 @@ export default function Home() {
           <Link href="/churches" className="text-[#85B7EB] text-sm hover:text-white transition">
             Find a Church
           </Link>
+          <Link href="/map" className="text-[#85B7EB] text-sm hover:text-white transition">
+            Map View
+          </Link>
           <Link href="/register" className="bg-[#5DCAA5] text-[#042C53] text-sm font-semibold px-4 py-2 rounded-lg hover:bg-white transition">
             Register Your Church
           </Link>
