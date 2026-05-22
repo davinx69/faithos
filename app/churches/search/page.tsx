@@ -21,6 +21,12 @@ export default function SearchPage() {
   const [churches, setChurches] = useState<Church[]>([]);
   const [filtered, setFiltered] = useState<Church[]>([]);
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get("q");
+    if (q) setSearch(q);
+  }, []);
   const [activeDenom, setActiveDenom] = useState("All");
   const [loading, setLoading] = useState(true);
 

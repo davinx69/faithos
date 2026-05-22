@@ -37,16 +37,17 @@ export default function Home() {
         </p>
 
         {/* SEARCH BAR */}
-        <div className="max-w-xl mx-auto flex gap-2">
+        <form action="/churches/search" method="get" className="max-w-xl mx-auto flex gap-2">
           <input
             type="text"
+            name="q"
             placeholder="Search by church name, pastor, or location..."
-            className="flex-1 px-4 py-3 rounded-lg text-sm text-gray-800 outline-none"
+            className="flex-1 px-4 py-3 rounded-lg text-sm text-gray-900 bg-white outline-none placeholder-gray-400"
           />
-          <Link href="/churches" className="bg-[#5DCAA5] text-[#042C53] font-semibold px-6 py-3 rounded-lg text-sm hover:bg-white transition whitespace-nowrap">
+          <button type="submit" className="bg-[#5DCAA5] text-[#042C53] font-semibold px-6 py-3 rounded-lg text-sm hover:bg-white transition whitespace-nowrap">
             Search
-          </Link>
-        </div>
+          </button>
+        </form>
 
         {/* QUICK FILTERS */}
         <div className="flex flex-wrap gap-2 justify-center mt-6">
