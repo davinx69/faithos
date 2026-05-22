@@ -1,75 +1,22 @@
 import Link from "next/link";
-
-const churches = [
-  {
-    id: "rccg-central-lagos",
-    name: "RCCG Central Lagos",
-    denomination: "Pentecostal",
-    pastor: "Pastor Adeyemi Olatunji",
-    address: "14 Broad Street, Lagos Island, Lagos",
-    service: "Sundays 8am & 10:30am",
-    verified: true,
-    branches: 12,
-  },
-  {
-    id: "mfm-yaba",
-    name: "Mountain of Fire Yaba",
-    denomination: "Pentecostal",
-    pastor: "Pastor Bola Fashola",
-    address: "23 Herbert Macaulay Way, Yaba, Lagos",
-    service: "Sundays 7am & 9am",
-    verified: true,
-    branches: 8,
-  },
-  {
-    id: "cathedral-church-lagos",
-    name: "Cathedral Church of Christ",
-    denomination: "Anglican",
-    pastor: "Bishop Humphrey Olumakaiye",
-    address: "Marina, Lagos Island, Lagos",
-    service: "Sundays 7:30am & 10am",
-    verified: true,
-    branches: 5,
-  },
-  {
-    id: "living-faith-lekki",
-    name: "Living Faith Church Lekki",
-    denomination: "Pentecostal",
-    pastor: "Pastor Emmanuel Adeyinka",
-    address: "Admiralty Way, Lekki Phase 1, Lagos",
-    service: "Sundays 8am & 10am",
-    verified: true,
-    branches: 20,
-  },
-  {
-    id: "christ-embassy-vi",
-    name: "Christ Embassy Victoria Island",
-    denomination: "Pentecostal",
-    pastor: "Pastor Grace Okonkwo",
-    address: "10 Adeola Odeku Street, Victoria Island, Lagos",
-    service: "Sundays 9am & 11am",
-    verified: true,
-    branches: 15,
-  },
-  {
-    id: "deeper-life-surulere",
-    name: "Deeper Christian Life Surulere",
-    denomination: "Evangelical",
-    pastor: "Pastor James Adebayo",
-    address: "32 Bode Thomas Street, Surulere, Lagos",
-    service: "Sundays 8am",
-    verified: true,
-    branches: 6,
-  },
-];
+import { supabase } from "@/lib/supabase";
 
 const denominations = ["All", "Pentecostal", "Anglican", "Catholic", "Baptist", "Evangelical", "Methodist"];
 
-export default function ChurchesPage() {
+export default async function ChurchesPage() {
+  const { data: churches, error } = await supabase
+    .from("churches")
+    .select("*")
+    .eq("published", true)
+    .order("name");
+
+  if (error) {
+    console.error(error);
+  }
+
   return (
     <main className="min-h-screen bg-[#f8f7f4]">
 
-      {/* NAVBAR */}
       <nav className="bg-[#042C53] px-6 py-4 flex items-center justify-between">
         <Link href="/">
           <span className="text-white font-bold text-xl tracking-tight">FAITH</span>
@@ -85,7 +32,6 @@ export default function ChurchesPage() {
         </div>
       </nav>
 
-      {/* SEARCH HEADER */}
       <section className="bg-[#042C53] px-6 py-10">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-2xl font-bold text-white mb-6">Find a Church in Nigeria</h1>
@@ -99,8 +45,6 @@ export default function ChurchesPage() {
               Search
             </button>
           </div>
-
-          {/* DENOMINATION FILTERS */}
           <div className="flex flex-wrap gap-2 mt-4">
             {denominations.map((d) => (
               <span
@@ -118,12 +62,13 @@ export default function ChurchesPage() {
         </div>
       </section>
 
-      {/* RESULTS */}
       <section className="px-6 py-10 max-w-3xl mx-auto">
-        <p className="text-sm text-gray-500 mb-6">{churches.length} verified churches found</p>
+        <p className="text-sm text-gray-500 mb-6">
+          {churches?.length ?? 0} verified churches found
+        </p>
 
         <div className="flex flex-col gap-4">
-          {churches.map((church) => (
+          {churches?.map((church) => (
             <Link href={`/churches/${church.id}`} key={church.id}>
               <div className="bg-white border border-gray-100 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-[#5DCAA5] transition cursor-pointer">
                 <div className="flex items-start justify-between gap-4">
@@ -139,11 +84,10 @@ export default function ChurchesPage() {
                     <p className="text-xs text-[#185FA5] font-medium mb-2">{church.denomination}</p>
                     <p className="text-sm text-gray-600 mb-1">👤 {church.pastor}</p>
                     <p className="text-sm text-gray-500 mb-1">📍 {church.address}</p>
-                    <p className="text-sm text-gray-500">🕐 {church.service}</p>
+                    <p className="text-sm text-gray-500">🕐 {church.service_times}</p>
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <div className="text-lg font-bold text-[#042C53]">{church.branches}</div>
-                    <div className="text-xs text-gray-400">branches</div>
+                    <div className="text-xs text-gray-400">{church.state}</div>
                   </div>
                 </div>
               </div>
@@ -152,7 +96,6 @@ export default function ChurchesPage() {
         </div>
       </section>
 
-      {/* FOOTER */}
       <footer className="bg-[#021e38] px-6 py-8 text-center mt-10">
         <div className="text-white font-bold text-lg mb-1">
           FAITH<span className="text-[#5DCAA5]">_OS™</span>
